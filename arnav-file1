@@ -1,0 +1,79 @@
+const express = require("express");
+const mysql = require("mysql2");
+const cors = require("cors");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "YourPassword123", // Change this to your MySQL password
+    database: "campus_events"
+});
+
+db.connect(err => {
+    if (err) {
+        console.error("Database connection failed:", err);
+        process.exit(1);
+    }
+    console.log("✅ Database connected successfully");
+
+    const createTable = `
+        CREATE TABLE IF NOT EXISTS event_participants (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            full_name VARCHAR(100) NOT NULL,
+            student_number VARCHAR(50) NOT NULL,
+            email_id VARCHAR(100) NOT NULL,
+            mobile VARCHAR(20),
+            event_title VARCHAR(100) NOT NULL,
+            faculty VARCHAR(100),
+            semester VARCHAR(50),
+            registration_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE KEY unique_entry (student_number, event_title)
+        )
+    `;
+    db.query(createTable, (err) => {
+        if (err) console.error("Table error:", err);
+        else console.log("✅ Table ready");
+    });
+});
+
+// Register new participant
+app.post("/api/register", (req, res) => {
+    const { full_name, student_number, email_id, mobile, event_title, faculty, semester } = req.body;
+
+    const checkQuery = "SELECT * FROM event_participants WHERE student_number=? AND event_title=?";
+    db.query(checkQuery, [student_number, event_title], (err, result) => {
+        if (err) return res.json({ success: false, message: "Database error" });
+        if (result.length > 0) return res.json({ success: false, message: "Already registered for this event" });
+
+        const insertQuery = `INSERT INTO event_participants 
+            (full_name, student_number, email_id, mobile, event_title, faculty, semester) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        
+        db.query(insertQuery, [full_name, student_number, email_id, mobile, event_title, faculty, semester], (err) => {
+            if (err) return res.json({ success: false, message: "Registration failed" });
+            res.json({ success: true, message: "Registered successfully" });
+        });
+    });
+});
+
+// Get all participants
+app.get("/api/participants", (req, res) => {
+    db.query("SELECT * FROM event_participants ORDER BY id DESC", (err, data) => {
+        if (err) res.json([]);
+        else res.json(data);
+    });
+});
+
+// Delete participant
+app.delete("/api/delete/:id", (req, res) => {
+    db.query("DELETE FROM event_participants WHERE id=?", [req.params.id], (err) => {
+        if (err) res.json({ success: false });
+        else res.json({ success: true });
+    });
+});
+
+app.listen(3000, () => console.log("🚀 Server running on http://localhost:3000"));
