@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | CampusConnect</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <div class="dashboard-header">
+            <h1>📊 Event Dashboard</h1>
+            <button onclick="logoutAdmin()" class="btn-logout">🚪 Logout</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalReg">0</div>
+                <div class="stat-label">Total Registrations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalEvents">0</div>
+                <div class="stat-label">Active Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalStudents">0</div>
+                <div class="stat-label">Unique Students</div>
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <input type="text" id="searchField" placeholder="🔍 Search by name, ID or email..." onkeyup="filterParticipants()">
+            <button onclick="exportData()" class="btn-export">📥 Export CSV</button>
+        </div>
+
+        <div class="table-container">
+            <div id="participantsList"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
