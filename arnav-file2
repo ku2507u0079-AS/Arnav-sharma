@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusConnect | Event Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="hero-section">
+            <h1>🎓 CampusConnect</h1>
+            <p>University Event Registration Portal</p>
+        </div>
+
+        <div class="card">
+            <h2>📝 Participant Registration</h2>
+            
+            <form id="registerForm">
+                <div class="input-group">
+                    <label>👤 Full Name *</label>
+                    <input type="text" id="fullName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>🆔 Student ID *</label>
+                    <input type="text" id="studentId" placeholder="Enter university ID" required>
+                </div>
+
+                <div class="input-group">
+                    <label>📧 Email Address *</label>
+                    <input type="email" id="email" placeholder="you@university.edu" required>
+                </div>
+
+                <div class="input-group">
+                    <label>📱 Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Optional">
+                </div>
+
+                <div class="input-group">
+                    <label>🎯 Select Event *</label>
+                    <select id="event" required>
+                        <option value="">-- Choose an event --</option>
+                        <option value="Code Rush">💻 Code Rush - Hackathon</option>
+                        <option value="Tech Summit">🚀 Tech Summit 2025</option>
+                        <option value="AI Masterclass">🤖 AI Masterclass</option>
+                        <option value="Cultural Night">🎭 Cultural Night</option>
+                        <option value="Sports Fest">⚽ Sports Fest</option>
+                    </select>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>🏛️ Department</label>
+                        <select id="department">
+                            <option value="">-- Select --</option>
+                            <option value="CSE">Computer Science</option>
+                            <option value="IT">Information Technology</option>
+                            <option value="ECE">Electronics</option>
+                            <option value="ME">Mechanical</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>📚 Year/Semester</label>
+                        <select id="year">
+                            <option value="">-- Select --</option>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">✨ Register Now</button>
+            </form>
+
+            <div id="alertBox" class="alert"></div>
+        </div>
+
+        <div class="footer-link">
+            <a href="admin-login.html">🔐 Admin Portal →</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
